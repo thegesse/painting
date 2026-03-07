@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.canvas.Canvas?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.geese.paint.Controller.TempController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <SplitPane dividerPositions="0.3" prefHeight="345" prefWidth="600">
+        <items>
+            <AnchorPane minWidth="100" style="-fx-background-color: grey">
+                <children>
+                    <VBox>
+                        <Button fx:id="blueButton" text="Blue"/>
+                        <Button fx:id="greenButton" text="green"/>
+                        <Button fx:id="redButton" text="red"/>
+
+                        <Label fx:id="statusLabel" text="X: 0 | Y: 0" />
+                    </VBox>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane minWidth="200">
+                <children>
+                    <Canvas fx:id="canvas" width="500" height="480"/>
+                </children>
+            </AnchorPane>
+        </items>
+    </SplitPane>
+</AnchorPane>
+
+
