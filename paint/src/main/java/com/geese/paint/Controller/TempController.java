@@ -1,11 +1,13 @@
 package com.geese.paint.Controller;
 
+import com.geese.paint.Inputs.MouseAction;
 import com.geese.paint.Inputs.MousePos;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class TempController {
@@ -17,15 +19,25 @@ public class TempController {
     @FXML private Button greenButton;
     @FXML private Button redButton;
     @FXML private Button blueButton;
+    @FXML private Button purpleButton;
+    @FXML private Button yellowButton;
+    @FXML private Button blackButton;
+    @FXML private Button whiteButton;
     @FXML private Label statusLabel;
 
 
     private final MousePos mousePos = new MousePos();
+    private final MouseAction mouseAction = new MouseAction();
 
     private void setUpEventHandlers() {
         greenButton.setOnAction(e -> makePenGreen());
         redButton.setOnAction(e -> makePenRed());
         blueButton.setOnAction(e -> makePenBlue());
+        purpleButton.setOnAction(e -> makePenPurple());
+        yellowButton.setOnAction(e -> makePenYellow());
+        blackButton.setOnAction(e -> makePenBlack());
+        whiteButton.setOnAction(e -> makePenWhite());
+
     }
 
     @FXML
@@ -33,25 +45,47 @@ public class TempController {
         gc =  canvas.getGraphicsContext2D();
         setUpEventHandlers();
 
+        canvas.widthProperty().bind(((Pane)canvas.getParent()).widthProperty());
+        canvas.heightProperty().bind(((Pane)canvas.getParent()).heightProperty());
+
         canvas.setOnMouseMoved(e -> {
             mousePos.updatePos(e);
             statusLabel.setText(mousePos.getFormattedPos());
         });
 
-        //delete this once we have colors
-        gc.setFill(Color.BLUE);
-        gc.fillRect(50, 50, 100, 100);
+        canvas.setOnMousePressed(e -> mouseAction.onMousePressed(e, gc));
+        canvas.setOnMouseDragged(e -> mouseAction.onMouseDragged(e, gc));
+
 
     }
 
     private void makePenGreen() {
+        mouseAction.setCurrentColor(Color.GREEN);
         System.out.println("green");
     }
 
     private void makePenRed() {
+        mouseAction.setCurrentColor(Color.RED);
         System.out.println("red");
     }
+    private void makePenPurple() {
+        mouseAction.setCurrentColor(Color.PURPLE);
+        System.out.println("purple");
+    }
+    private void makePenYellow() {
+        mouseAction.setCurrentColor(Color.YELLOW);
+        System.out.println("blue");
+    }
+    private void makePenBlack() {
+        mouseAction.setCurrentColor(Color.BLACK);
+        System.out.println("blue");
+    }
+    private void makePenWhite() {
+        mouseAction.setCurrentColor(Color.WHITE);
+        System.out.println("blue");
+    }
     private void makePenBlue() {
+        mouseAction.setCurrentColor(Color.BLUE);
         System.out.println("blue");
     }
 }

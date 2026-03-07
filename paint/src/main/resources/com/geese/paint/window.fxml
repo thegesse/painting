@@ -1,38 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.scene.canvas.Canvas?>
+
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.geese.paint.Controller.TempController"
             prefHeight="400.0" prefWidth="600.0">
 
-    <SplitPane dividerPositions="0.3" prefHeight="345" prefWidth="600">
-        <items>
-            <AnchorPane minWidth="100" style="-fx-background-color: grey">
-                <children>
-                    <VBox>
-                        <Button fx:id="blueButton" text="Blue"/>
-                        <Button fx:id="greenButton" text="green"/>
-                        <Button fx:id="redButton" text="red"/>
+    <HBox AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 
-                        <Label fx:id="statusLabel" text="X: 0 | Y: 0" />
-                    </VBox>
-                </children>
-            </AnchorPane>
+        <AnchorPane minWidth="120" style="-fx-background-color: #444444;">
+            <children>
+                <VBox spacing="15" AnchorPane.topAnchor="15" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10">
+                    <Label text="PALETTE" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 14;" />
 
-            <AnchorPane minWidth="200">
-                <children>
-                    <Canvas fx:id="canvas" width="500" height="480"/>
-                </children>
-            </AnchorPane>
-        </items>
-    </SplitPane>
+                    <TilePane prefColumns="2" hgap="8" vgap="8">
+                        <Button fx:id="blueButton" text="Blue" prefWidth="50" />
+                        <Button fx:id="greenButton" text="Green" prefWidth="50" />
+                        <Button fx:id="redButton" text="Red" prefWidth="50" />
+                        <Button fx:id="purpleButton" text="Purple" prefWidth="50" />
+                        <Button fx:id="yellowButton" text="Yellow" prefWidth="50" />
+                        <Button fx:id="blackButton" text="Black" prefWidth="50" />
+                        <Button fx:id="whiteButton" text="White" prefWidth="50" style="-fx-border-color: #888888;" />
+                    </TilePane>
+
+                    <Separator opacity="0.3" />
+
+                    <Label fx:id="statusLabel" text="X: 0 | Y: 0" textFill="#cccccc" style="-fx-font-family: 'Monospaced';" />
+                </VBox>
+            </children>
+        </AnchorPane>
+
+        <Pane fx:id="canvasContainer" HBox.hgrow="ALWAYS" style="-fx-background-color: white;">
+            <children>
+                <Canvas fx:id="canvas" width="500" height="480" />
+            </children>
+        </Pane>
+    </HBox>
 </AnchorPane>
-
-
