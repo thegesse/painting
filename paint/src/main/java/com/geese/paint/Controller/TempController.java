@@ -1,7 +1,9 @@
 package com.geese.paint.Controller;
 
-import com.geese.paint.Inputs.MouseAction;
 import com.geese.paint.Inputs.MousePos;
+import com.geese.paint.Inputs.Tools.PenTool;
+import com.geese.paint.Inputs.Tools.Shapes.RectangleTool;
+import com.geese.paint.Inputs.Tools.Tools;
 import com.geese.paint.Inputs.macros.HistoryManager;
 import com.geese.paint.Inputs.macros.MacroHandler;
 import com.geese.paint.Inputs.macros.RedoMacro;
@@ -19,92 +21,111 @@ public class TempController {
     @FXML private Canvas canvas;
     private GraphicsContext gc;
 
-    //buttons here
-    @FXML private Button greenButton;
-    @FXML private Button redButton;
-    @FXML private Button blueButton;
-    @FXML private Button purpleButton;
-    @FXML private Button yellowButton;
-    @FXML private Button blackButton;
-    @FXML private Button whiteButton;
+    // Tools & State
+    private Tools currentTool;
+    private Color currentColor = Color.BLACK;
+    private double currentBrushSize = 5.0;
 
+    // UI Elements
+    @FXML private Button greenButton, redButton, blueButton, purpleButton, yellowButton, blackButton, whiteButton;
     @FXML private Label statusLabel;
 
-
+    // Logic Helpers
     private final MousePos mousePos = new MousePos();
-    private final MouseAction mouseAction = new MouseAction();
-    //macros
     private final MacroHandler macroHandler = new MacroHandler();
-    private final HistoryManager history = new HistoryManager(canvas);
-
-    private void setUpEventHandlers() {
-        greenButton.setOnAction(e -> makePenGreen());
-        redButton.setOnAction(e -> makePenRed());
-        blueButton.setOnAction(e -> makePenBlue());
-        purpleButton.setOnAction(e -> makePenPurple());
-        yellowButton.setOnAction(e -> makePenYellow());
-        blackButton.setOnAction(e -> makePenBlack());
-        whiteButton.setOnAction(e -> makePenWhite());
-
-    }
+    private HistoryManager history;
 
     @FXML
     public void initialize() {
-        gc =  canvas.getGraphicsContext2D();
-        setUpEventHandlers();
+        // 1. Initialize Canvas & Graphics
+        gc = canvas.getGraphicsContext2D();
 
+        // 2. Initialize History (After canvas is injected)
+        this.history = new HistoryManager(canvas);
+
+        // 3. Set default tool
+        currentTool = new PenTool(currentColor, currentBrushSize);
+
+        setUpEventHandlers();
+        setupCanvasListeners();
+        setupMacros();
+    }
+
+    private void setupCanvasListeners() {
+        // Resizing
         canvas.widthProperty().bind(((Pane)canvas.getParent()).widthProperty());
         canvas.heightProperty().bind(((Pane)canvas.getParent()).heightProperty());
 
+        // Mouse Movement (Status bar)
         canvas.setOnMouseMoved(e -> {
             mousePos.updatePos(e);
             statusLabel.setText(mousePos.getFormattedPos());
         });
 
-        canvas.setOnMousePressed(e -> mouseAction.onMousePressed(e, gc));
-        canvas.setOnMouseDragged(e -> mouseAction.onMouseDragged(e, gc));
+        // DRAWING LOGIC: Call currentTool directly
+        canvas.setOnMousePressed(e -> {
+            canvas.requestFocus();
+            history.saveState(); // Capture state before stroke
+            currentTool.onPressed(e, gc);
+        });
 
-        //macros move later and fix later
-        /*macroHandler.registerMacros(KeyCode.Z, new UndoMacro(history));
+        canvas.setOnMouseDragged(e -> {
+            // Rubber-banding logic for shapes
+            if (currentTool instanceof RectangleTool) {
+                history.restorePreviewState();
+            }
+            currentTool.onDragged(e, gc);
+        });
+
+        canvas.setOnMouseReleased(e -> {
+            if(currentTool instanceof RectangleTool) {
+                history.saveState();
+            }
+        });
+    }
+
+    private void setupMacros() {
+        macroHandler.registerMacros(KeyCode.Z, new UndoMacro(history));
         macroHandler.registerMacros(KeyCode.Y, new RedoMacro(history));
 
-        canvas.sceneProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue != null) {
-                newValue.setOnKeyPressed(event -> {
+        canvas.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                newScene.setOnKeyPressed(event -> {
                     macroHandler.handleKey(event.getCode(), event.isControlDown());
                 });
             }
-        });*/
-
+        });
     }
 
-    private void makePenGreen() {
-        mouseAction.setCurrentColor(Color.GREEN);
-        System.out.println("green");
+    private void setUpEventHandlers() {
+        greenButton.setOnAction(e -> changeColor(Color.GREEN));
+        redButton.setOnAction(e -> changeColor(Color.RED));
+        blueButton.setOnAction(e -> changeColor(Color.BLUE));
+        purpleButton.setOnAction(e -> changeColor(Color.PURPLE));
+        yellowButton.setOnAction(e -> changeColor(Color.YELLOW));
+        blackButton.setOnAction(e -> changeColor(Color.BLACK));
+        whiteButton.setOnAction(e -> changeColor(Color.WHITE));
     }
 
-    private void makePenRed() {
-        mouseAction.setCurrentColor(Color.RED);
-        System.out.println("red");
+    private void changeColor(Color color) {
+        this.currentColor = color;
+        System.out.println("Color changed to: " + color.toString());
+
+        // Update the current tool with the new color
+        if (currentTool instanceof PenTool) {
+            currentTool = new PenTool(currentColor, currentBrushSize);
+        } else if (currentTool instanceof RectangleTool) {
+            currentTool = new RectangleTool(currentColor);
+        }
     }
-    private void makePenPurple() {
-        mouseAction.setCurrentColor(Color.PURPLE);
-        System.out.println("purple");
+
+    @FXML
+    public void selectRectangle() {
+        currentTool = new RectangleTool(currentColor);
     }
-    private void makePenYellow() {
-        mouseAction.setCurrentColor(Color.YELLOW);
-        System.out.println("blue");
-    }
-    private void makePenBlack() {
-        mouseAction.setCurrentColor(Color.BLACK);
-        System.out.println("blue");
-    }
-    private void makePenWhite() {
-        mouseAction.setCurrentColor(Color.WHITE);
-        System.out.println("blue");
-    }
-    private void makePenBlue() {
-        mouseAction.setCurrentColor(Color.BLUE);
-        System.out.println("blue");
+
+    @FXML
+    public void selectPen() {
+        currentTool = new PenTool(currentColor, currentBrushSize);
     }
 }

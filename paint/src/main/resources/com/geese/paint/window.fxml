@@ -28,6 +28,11 @@
                     </TilePane>
 
                     <Separator opacity="0.3" />
+                    <Label text="TOOLS" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 14;" />
+                    <TilePane prefColumns="2" hgap="8" vgap="8">
+                        <Button fx:id="penButton" text="Pen" onAction="#selectPen" prefWidth="50" />
+                        <Button fx:id="rectButton" text="Square" onAction="#selectRectangle" prefWidth="50" />
+                    </TilePane>
 
                     <Label fx:id="statusLabel" text="X: 0 | Y: 0" textFill="#cccccc" style="-fx-font-family: 'Monospaced';" />
                 </VBox>

@@ -27,6 +27,12 @@ public class HistoryManager {
         }
     }
 
+    public void restorePreviewState() {
+        if(!undoStack.isEmpty()) {
+            drawState(undoStack.peek());
+        }
+    }
+
     public void redo() {
         if (!redoStack.isEmpty()) {
             undoStack.push(canvas.snapshot(null, null));
