@@ -1,6 +1,7 @@
 package com.geese.paint.Inputs.macros;
 
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.WritableImage;
 
 import java.util.Stack;
@@ -41,6 +42,8 @@ public class HistoryManager {
     }
 
     public void drawState(WritableImage image) {
-        canvas.getGraphicsContext2D().drawImage(image, 0, 0);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        gc.drawImage(image, 0, 0, canvas.getWidth(), canvas.getHeight());
     }
 }

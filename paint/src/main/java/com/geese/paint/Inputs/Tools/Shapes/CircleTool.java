@@ -9,9 +9,11 @@ import javafx.scene.paint.Color;
 public class CircleTool implements Tools {
     private double startX, startY;
     private Color color;
+    private double size;
     
-    public CircleTool(Color color) {
+    public CircleTool(Color color, double size) {
         this.color = color;
+        this.size = size;
     }
     
     @Override
@@ -19,6 +21,7 @@ public class CircleTool implements Tools {
         startX = e.getX();
         startY = e.getY();
         gc.setStroke(color);
+        gc.setLineWidth(size);
     }
     
     @Override
@@ -28,6 +31,7 @@ public class CircleTool implements Tools {
         double w = Math.abs(startX - e.getX());
         double h = Math.abs(startY - e.getY());
 
+        gc.setLineWidth(size);
         gc.strokeOval(x, y, w, h);
     }
 }

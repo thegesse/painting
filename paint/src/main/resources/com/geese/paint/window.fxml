@@ -34,8 +34,30 @@
                         <Button fx:id="rectButton" text="Square" onAction="#selectRectangle" prefWidth="50" />
                         <Button fx:id="circleButton" text="Circle" onAction="#selectCircle" prefWidth="50" />
                         <Button fx:id="bucketButton" text="Bucket" onAction="#selectBucket" prefWidth="50" />
+                        <Button fx:id="eraserButton" text="Eraser" onAction="#selectEraser" prefWidth="50" />
                     </TilePane>
 
+                    <Separator opacity="0.3" />
+                    <Label text="SETTINGS" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 14;" />
+                    <TilePane prefColumns="1" vgap="10">
+                        <VBox spacing="5" alignment="CENTER_LEFT">
+                            <HBox spacing="10">
+                                <Label text="Size:" textFill="WHITE" />
+                                <Label fx:id="sizeLabel" text="5.0" textFill="CYAN" />
+                            </HBox>
+                            <Slider fx:id="sizeSlider" min="1" max="100" value="5"
+                                    showTickMarks="true" majorTickUnit="25"
+                                    prefWidth="150" />
+                        </VBox>
+
+                        <Button text="Clear Canvas" onAction="#clearCanvas"
+                                style="-fx-background-color: #ff4444; -fx-text-fill: white;"
+                                prefWidth="150" />
+                    </TilePane>
+                    <Separator opacity="0.3" />
+                    <Button text="Save as PNG" onAction="#saveImage"
+                            style="-fx-background-color: #4CAF50; -fx-text-fill: white;"
+                            prefWidth="150" />
                     <Label fx:id="statusLabel" text="X: 0 | Y: 0" textFill="#cccccc" style="-fx-font-family: 'Monospaced';" />
                 </VBox>
             </children>
