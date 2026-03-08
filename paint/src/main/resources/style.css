@@ -1,0 +1,69 @@
+.root {
+    -fx-base: #c0c0c0;
+    -fx-background-color: #c0c0c0;
+}
+
+.button {
+    -fx-background-radius: 0;
+    -fx-background-color: #c0c0c0;
+    -fx-border-color: white #808080 #808080 white;
+    -fx-border-width: 2;
+    -fx-font-family: "MS Sans Serif", "Tahoma", sans-serif;
+    -fx-font-size: 11px;
+    -fx-text-fill: black;
+}
+
+.button:pressed {
+    -fx-border-color: #808080 white white #808080;
+    -fx-padding: 5 3 3 5;
+}
+
+.tool-bar {
+    -fx-background-color: #c0c0c0;
+    -fx-border-color: #808080 white white #808080;
+    -fx-border-width: 1;
+}
+
+.canvas-container {
+    -fx-background-color: #808080;
+    -fx-padding: 5;
+}
+
+#canvas {
+    -fx-cursor: crosshair;
+    -fx-background-color: white;
+}
+
+.slider .thumb {
+    -fx-background-color: #c0c0c0;
+    -fx-background-radius: 0;
+    -fx-border-color: white #808080 #808080 white;
+    -fx-border-width: 2;
+}
+
+.slider .track {
+    -fx-background-color: #808080;
+    -fx-background-radius: 0;
+    -fx-border-color: #404040 white white #404040;
+}
+
+.header-label {
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(one-pass-box, black, 1, 0.0, 1, 1);
+}
+
+.label {
+    -fx-text-fill: #eeeeee; /* A light, crisp off-white */
+    -fx-font-family: "MS Sans Serif", "Tahoma", sans-serif;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+#statusLabel {
+    -fx-text-fill: #ffffff;
+}
+
+.button {
+    -fx-text-fill: #000000;
+    -fx-font-weight: normal;
+}

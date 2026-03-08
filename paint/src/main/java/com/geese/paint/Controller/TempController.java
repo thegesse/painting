@@ -122,7 +122,7 @@ public class TempController {
         greenButton.setOnAction(e -> changeColor(Color.GREEN));
         redButton.setOnAction(e -> changeColor(Color.RED));
         blueButton.setOnAction(e -> changeColor(Color.BLUE));
-        purpleButton.setOnAction(e -> changeColor(Color.PURPLE));
+
         yellowButton.setOnAction(e -> changeColor(Color.YELLOW));
         blackButton.setOnAction(e -> changeColor(Color.BLACK));
         whiteButton.setOnAction(e -> changeColor(Color.WHITE));

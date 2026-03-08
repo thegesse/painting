@@ -14,27 +14,26 @@
 
         <AnchorPane minWidth="120" style="-fx-background-color: #444444;">
             <children>
-                <VBox spacing="15" AnchorPane.topAnchor="15" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10">
-                    <Label text="PALETTE" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 14;" />
 
-                    <TilePane prefColumns="2" hgap="8" vgap="8">
-                        <Button fx:id="blueButton" text="Blue" prefWidth="50" />
-                        <Button fx:id="greenButton" text="Green" prefWidth="50" />
-                        <Button fx:id="redButton" text="Red" prefWidth="50" />
-                        <Button fx:id="purpleButton" text="Purple" prefWidth="50" />
-                        <Button fx:id="yellowButton" text="Yellow" prefWidth="50" />
-                        <Button fx:id="blackButton" text="Black" prefWidth="50" />
-                        <Button fx:id="whiteButton" text="White" prefWidth="50" style="-fx-border-color: #888888;" />
+                <VBox spacing="15" AnchorPane.topAnchor="15" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10">
+                    <Label text="PALETTE" styleClass="header-label" />
+                    <TilePane prefColumns="2" hgap="2" vgap="2">
+                        <Button fx:id="blackButton" prefWidth="25" prefHeight="25" style="-fx-background-color: black; -fx-border-color: #808080 white white #808080;" />
+                        <Button fx:id="whiteButton" prefWidth="25" prefHeight="25" style="-fx-background-color: white; -fx-border-color: #808080 white white #808080;" />
+                        <Button fx:id="redButton"   prefWidth="25" prefHeight="25" style="-fx-background-color: red; -fx-border-color: #808080 white white #808080;" />
+                        <Button fx:id="blueButton"  prefWidth="25" prefHeight="25" style="-fx-background-color: blue; -fx-border-color: #808080 white white #808080;" />
+                        <Button fx:id="greenButton" prefWidth="25" prefHeight="25" style="-fx-background-color: green; -fx-border-color: #808080 white white #808080;" />
+                        <Button fx:id="yellowButton" prefWidth="25" prefHeight="25" style="-fx-background-color: yellow; -fx-border-color: #808080 white white #808080;" />
                     </TilePane>
 
                     <Separator opacity="0.3" />
-                    <Label text="TOOLS" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 14;" />
-                    <TilePane prefColumns="2" hgap="8" vgap="8">
-                        <Button fx:id="penButton" text="Pen" onAction="#selectPen" prefWidth="50" />
-                        <Button fx:id="rectButton" text="Square" onAction="#selectRectangle" prefWidth="50" />
-                        <Button fx:id="circleButton" text="Circle" onAction="#selectCircle" prefWidth="50" />
-                        <Button fx:id="bucketButton" text="Bucket" onAction="#selectBucket" prefWidth="50" />
-                        <Button fx:id="eraserButton" text="Eraser" onAction="#selectEraser" prefWidth="50" />
+                    <Label text="TOOLS" styleClass="header-label" />
+                    <TilePane prefColumns="2" hgap="2" vgap="2">
+                        <Button onAction="#selectPen"      text="✎" prefWidth="30" prefHeight="30" />
+                        <Button onAction="#selectRectangle" text="▭" prefWidth="30" prefHeight="30" />
+                        <Button onAction="#selectCircle"    text="o" prefWidth="30" prefHeight="30" />
+                        <Button onAction="#selectBucket"    text="bucket" prefWidth="30" prefHeight="30" />
+                        <Button onAction="#selectEraser"    text="eraser" prefWidth="30" prefHeight="30" />
                     </TilePane>
 
                     <Separator opacity="0.3" />

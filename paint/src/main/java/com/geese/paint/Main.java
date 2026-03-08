@@ -14,8 +14,8 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("window.fxml"));
 
         Scene scene = new Scene(loader.load());
-
-        stage.setTitle("Paint");
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        stage.setTitle("Goose paintin app");
         stage.setScene(scene);
         stage.show();
     }
