@@ -2,6 +2,7 @@ package com.geese.paint.Controller;
 
 import com.geese.paint.Inputs.MousePos;
 import com.geese.paint.Inputs.Tools.PenTool;
+import com.geese.paint.Inputs.Tools.Shapes.CircleTool;
 import com.geese.paint.Inputs.Tools.Shapes.RectangleTool;
 import com.geese.paint.Inputs.Tools.Tools;
 import com.geese.paint.Inputs.macros.HistoryManager;
@@ -71,14 +72,14 @@ public class TempController {
 
         canvas.setOnMouseDragged(e -> {
             // Rubber-banding logic for shapes
-            if (currentTool instanceof RectangleTool) {
+            if (currentTool instanceof RectangleTool || currentTool instanceof CircleTool) {
                 history.restorePreviewState();
             }
             currentTool.onDragged(e, gc);
         });
 
         canvas.setOnMouseReleased(e -> {
-            if(currentTool instanceof RectangleTool) {
+            if(currentTool instanceof RectangleTool || currentTool instanceof CircleTool) {
                 history.saveState();
             }
         });
@@ -116,6 +117,8 @@ public class TempController {
             currentTool = new PenTool(currentColor, currentBrushSize);
         } else if (currentTool instanceof RectangleTool) {
             currentTool = new RectangleTool(currentColor);
+        }else if (currentTool instanceof CircleTool) {
+            currentTool = new CircleTool(currentColor);
         }
     }
 
@@ -127,5 +130,10 @@ public class TempController {
     @FXML
     public void selectPen() {
         currentTool = new PenTool(currentColor, currentBrushSize);
+    }
+
+    @FXML
+    public void selectCircle() {
+        currentTool = new CircleTool(currentColor);
     }
 }
