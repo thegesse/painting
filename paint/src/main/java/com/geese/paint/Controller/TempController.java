@@ -1,6 +1,7 @@
 package com.geese.paint.Controller;
 
 import com.geese.paint.Inputs.MousePos;
+import com.geese.paint.Inputs.Tools.BucketTool;
 import com.geese.paint.Inputs.Tools.PenTool;
 import com.geese.paint.Inputs.Tools.Shapes.CircleTool;
 import com.geese.paint.Inputs.Tools.Shapes.RectangleTool;
@@ -22,29 +23,23 @@ public class TempController {
     @FXML private Canvas canvas;
     private GraphicsContext gc;
 
-    // Tools & State
+    // Tool
     private Tools currentTool;
     private Color currentColor = Color.BLACK;
     private double currentBrushSize = 5.0;
 
-    // UI Elements
+    // buttons
     @FXML private Button greenButton, redButton, blueButton, purpleButton, yellowButton, blackButton, whiteButton;
     @FXML private Label statusLabel;
 
-    // Logic Helpers
     private final MousePos mousePos = new MousePos();
     private final MacroHandler macroHandler = new MacroHandler();
     private HistoryManager history;
 
     @FXML
     public void initialize() {
-        // 1. Initialize Canvas & Graphics
         gc = canvas.getGraphicsContext2D();
-
-        // 2. Initialize History (After canvas is injected)
         this.history = new HistoryManager(canvas);
-
-        // 3. Set default tool
         currentTool = new PenTool(currentColor, currentBrushSize);
 
         setUpEventHandlers();
@@ -53,25 +48,21 @@ public class TempController {
     }
 
     private void setupCanvasListeners() {
-        // Resizing
         canvas.widthProperty().bind(((Pane)canvas.getParent()).widthProperty());
         canvas.heightProperty().bind(((Pane)canvas.getParent()).heightProperty());
 
-        // Mouse Movement (Status bar)
         canvas.setOnMouseMoved(e -> {
             mousePos.updatePos(e);
             statusLabel.setText(mousePos.getFormattedPos());
         });
 
-        // DRAWING LOGIC: Call currentTool directly
         canvas.setOnMousePressed(e -> {
             canvas.requestFocus();
-            history.saveState(); // Capture state before stroke
+            history.saveState();
             currentTool.onPressed(e, gc);
         });
 
         canvas.setOnMouseDragged(e -> {
-            // Rubber-banding logic for shapes
             if (currentTool instanceof RectangleTool || currentTool instanceof CircleTool) {
                 history.restorePreviewState();
             }
@@ -111,14 +102,14 @@ public class TempController {
     private void changeColor(Color color) {
         this.currentColor = color;
         System.out.println("Color changed to: " + color.toString());
-
-        // Update the current tool with the new color
         if (currentTool instanceof PenTool) {
             currentTool = new PenTool(currentColor, currentBrushSize);
         } else if (currentTool instanceof RectangleTool) {
             currentTool = new RectangleTool(currentColor);
         }else if (currentTool instanceof CircleTool) {
             currentTool = new CircleTool(currentColor);
+        }else if (currentTool instanceof BucketTool) {
+            currentTool = new BucketTool(currentColor);
         }
     }
 
@@ -135,5 +126,10 @@ public class TempController {
     @FXML
     public void selectCircle() {
         currentTool = new CircleTool(currentColor);
+    }
+
+    @FXML
+    public void selectBucket() {
+        currentTool = new BucketTool(currentColor);
     }
 }

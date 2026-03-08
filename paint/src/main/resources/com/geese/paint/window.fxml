@@ -33,6 +33,7 @@
                         <Button fx:id="penButton" text="Pen" onAction="#selectPen" prefWidth="50" />
                         <Button fx:id="rectButton" text="Square" onAction="#selectRectangle" prefWidth="50" />
                         <Button fx:id="circleButton" text="Circle" onAction="#selectCircle" prefWidth="50" />
+                        <Button fx:id="bucketButton" text="Bucket" onAction="#selectBucket" prefWidth="50" />
                     </TilePane>
 
                     <Label fx:id="statusLabel" text="X: 0 | Y: 0" textFill="#cccccc" style="-fx-font-family: 'Monospaced';" />
